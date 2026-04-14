@@ -38,8 +38,12 @@ export default function App() {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ "form-name": "waitlist", email }).toString(),
       });
-      if (res.ok) { setDone(true); }
-      else { setError("Something went wrong. Please try again."); }
+if (res.ok) {
+  setDone(true);
+  if (typeof fbq === "function") {
+    fbq("track", "Lead", { content_name: "waitlist_signup" });
+  }
+}      else { setError("Something went wrong. Please try again."); }
     } catch { setError("Something went wrong. Please try again."); }
   };
 
